@@ -9,62 +9,23 @@ const form = document.querySelector('#form')
 const input = document.querySelector('#header__input')
 
 
-// listening submit form
 
-form.onsubmit = function (e) {
+function removeCard (){
+    const prevCard = document.querySelector('.weather');
+    if (prevCard) prevCard.remove();
+}
 
-    
 
-
-    // Отменяем отправку формы
-    e.preventDefault();
-
-    
-    let city = input.value.trim();
-    console.log(city);
-
-    // делаем запрос на сервер
-
-    const url = `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}`;
-
-    //выполняем запрос
-    fetch(url)
-        .then( (response) => {
-            return response.json();
-        })
-        .then ( (data) => {
-            console.log(data);    
-            
-            // Проверка на ошибку
-            
-            if (data.error){
-                
-                const prevCard = document.querySelector('.weather');
-                if (prevCard) prevCard.remove();
-                
-                
-                const html = `<section class="weather">
-                                <div class="weather__card" style="display: flex; justify-content: center; align-items: center; font-size:30px;">${data.error.message}</div>
+function showError(errorMessage) {
+    const html = `<section class="weather">
+                                <div class="weather__card" style="display: flex; justify-content: center; align-items: center; font-size:30px;">${errorMessage}</div>
                                 </section>
                                  `;
                 header.insertAdjacentHTML('afterend', html);
-            }else {
-                
-                console.log(data.location.name);
-                console.log(data.location.country);
-                console.log(data.current.temp_c);
-                console.log(data.current.condition.text);
+}
 
-                // Отображаем картачки
-
-                // yдаляем карточки
-                
-                const prevCard = document.querySelector('.weather');
-                if (prevCard) prevCard.remove();
-
-                // Разметкадля  картачки
-
-                const html = `
+function showCard (data){
+    const html = `
                             <section class="weather">
                              <div class="weather__card">
                                  <h2 class="weather__city">${data.location.name} <span>${data.location.country}</span></h2>
@@ -77,13 +38,56 @@ form.onsubmit = function (e) {
                             </section>
                             `
                 header.insertAdjacentHTML('afterend', html);
-            }    
+}
 
 
-            
+async function getWeather(city) {
+
+    const url = `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}`;
+    const response = await fetch(url)
+    const data = await response.json();
+    return data;
+}
+
+// listening submit form
+
+form.onsubmit = async function (e) {
+    // Отменяем отправку формы
+    e.preventDefault();
+
+    
+    let city = input.value.trim();
+    console.log(city);
+
+    // делаем запрос на сервер
+    const data = await getWeather(city)
+
+    if (data.error){
+                
+        removeCard();
+
+        showError(data.error.message);
         
-        })
+    }else {
+        
+        console.log(data.location.name);
+        console.log(data.location.country);
+        console.log(data.current.temp_c);
+        console.log(data.current.condition.text);
 
+        // Отображаем картачки
 
+        // yдаляем карточки
+        
+        removeCard();
+        showCard(data);
+
+        // Разметкадля  картачки
+
+        
+    } 
+
+    
+  
 
 }
