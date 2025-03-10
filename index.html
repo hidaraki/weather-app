@@ -13,23 +13,16 @@
 <body>
     <header class="header">
         <h1 class="header__title">Прогноз погоды</h1>
-        <form class="header__form">
+        <form class="header__form" id="form">
 
-            <input class="header__input" type="text" placeholder="Введите название города">
+            <input class="header__input" type="text" placeholder="Введите название города" id="header__input">
             <button class="header__btn">Показать</button>
         </form>
     </header>
 
-    <section class="weather">
-        <div class="weather__card">
-            <h2 class="weather__city">London <span>GB</span></h2>
-            <div class="weather__data">
-                <div class="weather__temperature">-11<sup>°c<sup></div>
-                <img class="Weather__img" src="./images/Drizzle&Sun.png" alt="Drizzle&Sun.png">
-            </div>
-            <h4 class="weather__desc">Drizzle&Sun</h4>
-        </div>
-    </section>
+    <!-- <section class="weather">
+    <div class="weather__card">${data.error.message}</div>
+    </section> -->
 
     <footer class="footer">
         <div class="footer__text">

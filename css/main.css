@@ -83,8 +83,8 @@ body{
     flex-direction: column;
     padding: 18px;
     gap: 3px;
-    width: 380px;
-    height: 290px;
+    width: 440px;
+    height: 330px;
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0px 5px 20px rgba(27, 108, 114, 0.3)
@@ -92,13 +92,14 @@ body{
 
 .weather__card::before{
     content: "";
+    
     position: absolute;    
     z-index: -1;
     left: 0;
     left: 5px;
     bottom: -8px;
     
-    width: 370px;
+    width: 430px;
     height: 260px;
     border-radius: 8px;
     box-shadow: 0px 5px 20px rgba(27, 108, 114, 0.3)
@@ -125,6 +126,10 @@ body{
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.weather__img{
+
 }
 
 .weather__temperature {
